@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tiempos Dashboard
 // @namespace    http://tampermonkey.net/
-// @version      0.1
+// @version      0.2
 // @description  Permite montos negativos, inserta terminaciones y pares.
 // @author       Dilbert Ramírez
 // @match        https://timesdashboard.com/Herradura/apuestasorteo*
