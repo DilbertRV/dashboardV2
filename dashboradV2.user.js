@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tiempos Dashboard
 // @namespace    http://tampermonkey.net/
-// @version      0.3
+// @version      0.4
 // @description  Permite montos negativos, inserta terminaciones y pares.
 // @author       Dilbert Ramírez
 // @match        https://timesdashboard.com/Herradura/apuestasorteo*
@@ -167,6 +167,21 @@
         };
         //divCard[0].appendChild(button);
         divCol[0].style = "margin-bottom: -36px;";
+         var pares = document.createElement("p");
+        pares.innerHTML = "Pares";
+        pares.style = "margin-top: 10px;";
+        divCard[0].appendChild(pares);
+
+        var btnPares = document.createElement("button");
+        btnPares.innerHTML = "Pares";
+        btnPares.className = "btn btn-info";
+        btnPares.style =
+            "margin-top: -18px; width: auto; height: 28px; text-align: center; line-height: 0px; ";
+        btnPares.onclick = function () {
+            inputNumero.value += "00+11+22+33+44+55+66+77+88+99+";
+            focusInput(inputNumero);
+        };
+        divCard[0].appendChild(btnPares);
         var terminaciones = document.createElement("p");
         terminaciones.innerHTML = "Terminaciones";
         terminaciones.setAttribute("id", "term");
@@ -203,21 +218,7 @@
             };
             divCard[0].appendChild(btnTerminaciones);
         }
-        var pares = document.createElement("p");
-        pares.innerHTML = "Pares";
-        pares.style = "margin-top: 10px;";
-        divCard[0].appendChild(pares);
-
-        var btnPares = document.createElement("button");
-        btnPares.innerHTML = "Pares";
-        btnPares.className = "btn btn-info";
-        btnPares.style =
-            "margin-top: -18px; width: auto; height: 28px; text-align: center; line-height: 0px; ";
-        btnPares.onclick = function () {
-            inputNumero.value += "00+11+22+33+44+55+66+77+88+99+";
-            focusInput(inputNumero);
-        };
-        divCard[0].appendChild(btnPares);
+       
         var decenas = document.createElement("p");
         decenas.innerHTML = "Decenas";
         decenas.setAttribute("id", "dec");
