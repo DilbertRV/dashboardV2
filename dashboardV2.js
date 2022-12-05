@@ -41,6 +41,7 @@
   ];
 
   function listaDeSorteos() {
+    console.log("prueba");
     setTimeout(function () {
       var result = document.querySelectorAll(
         "ul> div > div > ul > li > a.nav-link"
