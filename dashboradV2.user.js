@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tiempos Dashboard
 // @namespace    http://tampermonkey.net/
-// @version      0.2
+// @version      0.3
 // @description  Permite montos negativos, inserta terminaciones y pares.
 // @author       Dilbert Ramírez
 // @match        https://timesdashboard.com/Herradura/apuestasorteo*
@@ -12,13 +12,13 @@
 // @grant        none
 // ==/UserScript==
 (function () {
-    var link = document.createElement('link');
-    link.setAttribute('rel', 'stylesheet');
-    link.setAttribute('type', 'text/css');
-    link.setAttribute('href', 'https://fonts.googleapis.com/css2?family=Dongle&family=Nunito:wght@500&display=swap');
-    document.head.appendChild(link);
-    var bodyStyle = document.body;
-    bodyStyle.style.fontFamily = "Nunito";
+    //var link = document.createElement('link');
+    //link.setAttribute('rel', 'stylesheet');
+    //link.setAttribute('type', 'text/css');
+    //link.setAttribute('href', 'https://fonts.googleapis.com/css2?family=Dongle&family=Nunito:wght@500&display=swap');
+    //document.head.appendChild(link);
+    //var bodyStyle = document.body;
+    //bodyStyle.style.fontFamily = "Nunito";
     
 
     var ulList = document.getElementsByClassName("nav nav-tabs");
