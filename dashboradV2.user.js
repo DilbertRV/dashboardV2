@@ -12,13 +12,14 @@
 // @grant        none
 // ==/UserScript==
 (function () {
-    // var link = document.createElement('link');
-    // link.setAttribute('rel', 'stylesheet');
-    // link.setAttribute('type', 'text/css');
-    // link.setAttribute('href', 'https://fonts.googleapis.com/css2?family=Dongle&family=Nunito:wght@500&display=swap');
-    // document.head.appendChild(link);
-    // var bodyStyle = document.body;
-    // bodyStyle.style.fontFamily = "Nunito";
+    var link = document.createElement('link');
+    link.setAttribute('rel', 'stylesheet');
+    link.setAttribute('type', 'text/css');
+    link.setAttribute('href', 'https://fonts.googleapis.com/css2?family=Dongle&family=Nunito:wght@500&display=swap');
+    document.head.appendChild(link);
+    var bodyStyle = document.body;
+    bodyStyle.style.fontFamily = "Nunito";
+    
 
     var ulList = document.getElementsByClassName("nav nav-tabs");
     var ulList2 = document.getElementsByClassName("nav nav-tabs")[0];
