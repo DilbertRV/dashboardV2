@@ -7,8 +7,8 @@
 // @match        https://timesdashboard.com/Herradura/apuestasorteo*
 // @include https://timesdashboard.com/Herradura/apuestasorteo*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=tampermonkey.net
-// @updateURL    https://github.com/DilbertRV/dashboardV2/raw/8c44045d26525e505ce0c95a95835ff976886e53/dashboradV2.user.js
-// @downloadURL  https://github.com/DilbertRV/dashboardV2/raw/8c44045d26525e505ce0c95a95835ff976886e53/dashboradV2.user.js
+// @updateURL    https://github.com/DilbertRV/dashboardV2/raw/main/dashboradV2.user.js
+// @downloadURL  https://github.com/DilbertRV/dashboardV2/raw/main/dashboradV2.user.js
 // @grant        none
 // ==/UserScript==
 (function () {
