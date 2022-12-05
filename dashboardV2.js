@@ -5,6 +5,8 @@
 // @description  Permite montos negativos, inserta terminaciones y pares.
 // @author       Dilbert Ramírez
 // @match        https://timesdashboard.com/Herradura/apuestasorteo*
+// @updateURL    https://raw.githubusercontent.com/DilbertRV/dashboardV2/main/dashboardV2.js
+// @downloadURL  https://raw.githubusercontent.com/DilbertRV/dashboardV2/main/dashboardV2.js
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=tampermonkey.net
 // @grant        none
 // ==/UserScript==
