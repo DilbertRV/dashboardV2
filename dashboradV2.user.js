@@ -19,7 +19,6 @@
     //document.head.appendChild(link);
     //var bodyStyle = document.body;
     //bodyStyle.style.fontFamily = "Nunito";
-    
 
     var ulList = document.getElementsByClassName("nav nav-tabs");
     var ulList2 = document.getElementsByClassName("nav nav-tabs")[0];
@@ -90,7 +89,7 @@
                 montoDelRefuerzo = 3000;
             } else if (totalListaFiltrado > 75000) {
                 montoDelRefuerzo = 2500;
-            } else if (totalListaFiltrado > 60000 && totalListaFiltrado <= 75000) {
+            } else if (totalListaFiltrado > 40000 && totalListaFiltrado <= 75000) {
                 montoDelRefuerzo = 2000;
             } else if (totalListaFiltrado < 40000) {
                 montoDelRefuerzo = 1500;
