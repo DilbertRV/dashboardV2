@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tiempos Dashboard
 // @namespace    http://tampermonkey.net/
-// @version      0.4
+// @version      0.5
 // @description  Permite montos negativos, inserta terminaciones y pares.
 // @author       Dilbert Ramírez
 // @match        https://timesdashboard.com/Herradura/apuestasorteo*
@@ -19,6 +19,8 @@
     //document.head.appendChild(link);
     //var bodyStyle = document.body;
     //bodyStyle.style.fontFamily = "Nunito";
+
+    var flag = false;
 
     var ulList = document.getElementsByClassName("nav nav-tabs");
     var ulList2 = document.getElementsByClassName("nav nav-tabs")[0];
@@ -43,6 +45,7 @@
 
     function listaDeSorteos() {
         setTimeout(function () {
+
             var result = document.querySelectorAll(
                 "ul> div > div > ul > li > a.nav-link"
             );
@@ -53,7 +56,6 @@
                     result[i].style = "color: #168dee;";
                 }
                 if (listaDeNavLinks.some((v) => result[i].innerHTML.includes(v))) {
-                    console.log("removing " + result[i].innerHTML);
                     result[i].remove();
                 }
                 result[i].addEventListener("click", function () {
@@ -83,40 +85,44 @@
             var totalListaFiltrado = totalLista.textContent.replace("Total:  ¢", "");
             totalListaFiltrado = totalListaFiltrado.replace(/\D/g, "");
             totalListaFiltrado = parseInt(totalListaFiltrado);
-            console.log(totalListaFiltrado);
             var montoDelRefuerzo;
-            if (totalListaFiltrado > 100000) {
-                montoDelRefuerzo = 3000;
-            } else if (totalListaFiltrado > 75000) {
-                montoDelRefuerzo = 2500;
-            } else if (totalListaFiltrado > 40000 && totalListaFiltrado <= 75000) {
-                montoDelRefuerzo = 2000;
-            } else if (totalListaFiltrado < 40000) {
+            if (totalListaFiltrado > 0) {
                 montoDelRefuerzo = 1500;
             }
             var table = document.getElementsByClassName("table table-xs")[0];
             var tdChildNodes = [];
             var td = table.children[1].children;
+
             var numerosAltos = [];
             for (var i = 0; i < td.length; i++) {
                 tdChildNodes.push(td[i].childNodes);
             }
             for (var j = 0; j < tdChildNodes.length; j++) {
+
                 for (var k = 0; k < tdChildNodes[j].length; k++) {
                     var montoTotal = tdChildNodes[j][k];
                     if (montoTotal.textContent.includes("¢")) {
                         var monto = [];
                         monto = montoTotal.textContent.replace("¢", "");
                         monto = monto.replace(/\D/g, "");
-                        console.log(parseInt(monto));
-                        if (monto >= parseInt(montoDelRefuerzo)) {
-                            var numeroAlto = tdChildNodes[j][k - 2].innerHTML;
-                            numeroAlto = numeroAlto.replace(/\D/g, "");
+                        var numeroAlto = tdChildNodes[j][k - 2].innerHTML;
+                        numeroAlto = numeroAlto.replace(/\D/g, "");
+                       var numerosEspeciales = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,25,26,29,35,41,49,50,51,56,60,61,65,66,69,71,73,77,80,90,99];
+                        if (numerosEspeciales.includes(parseInt(numeroAlto))) {
+                            var montoRefuerzo = parseInt(montoDelRefuerzo) - 600;
+                            if(monto >= montoRefuerzo){
+                                numerosAltos.push(
+                                    numeroAlto + " - " + tdChildNodes[j][k].innerHTML + "🚫"
+                                );
+                            }
+                        } else if(monto >= parseInt(montoDelRefuerzo)) {
+                            console.log(montoDelRefuerzo);
                             numerosAltos.push(
                                 numeroAlto + " - " + tdChildNodes[j][k].innerHTML + "🔴"
                             );
                         }
                     }
+
                 }
             }
             imprimirRefuerzosEnPantalla();
@@ -145,6 +151,64 @@
             }
         }, 1000);
     }
+    //     function insertarCopiarRevertirAcciones(){
+
+    //         var btnCopy = document.querySelector("#divSorteo > div:nth-child(2) > div:nth-child(1) > div > div > div > button:nth-child(6)")
+    //         var node = document.querySelector("#divSorteo > div:nth-child(2) > div:nth-child(1) > div > div > div > fieldset:nth-child(5)");
+    //         var fieldSetRever = document.querySelector("#divSorteo > div:nth-child(2) > div:nth-child(1) > div > div > div > fieldset:nth-child(5)");
+    //         if(btnCopy === null) {
+    //             btnCopy = document.querySelector("#divSorteo > div:nth-child(2) > div:nth-child(1) > div > div > div > button:nth-child(8)");
+    //             node = document.querySelector("#divSorteo > div:nth-child(2) > div:nth-child(1) > div > div > div > fieldset:nth-child(7)")
+    //             fieldSetRever = document.querySelector("#divSorteo > div:nth-child(2) > div:nth-child(1) > div > div > div > fieldset:nth-child(7)");
+    //         }
+    //         btnCopy.removeAttribute('data-toggle');
+    //         btnCopy.setAttribute("onclick", "CopiarTiquete()");
+    //         btnCopy.setAttribute("id", "btnCopyButton");
+    //         var inputCopy = node.cloneNode(true);
+    //         var childInputCopy = inputCopy.children[0];
+    //         childInputCopy.setAttribute("id", "txtCodigoCopiar");
+    //         childInputCopy.setAttribute("placeholder", "Copiar número");
+    //         childInputCopy.parentElement.children[1].children[0].innerText = "📃";
+    //         childInputCopy.addEventListener("keypress", function(event) {
+    //             if (event.key === "Enter") {
+    //                 event.preventDefault();
+    //                 document.getElementById("btnCopyButton").click();
+    //             }
+    //         });
+    //         btnCopy.parentNode.insertBefore(
+    //             inputCopy, btnCopy
+    //         )
+    //         var btnRevert = document.querySelector("#divSorteo > div:nth-child(2) > div:nth-child(1) > div > div > div > button:nth-child(9)")
+    //         if(btnRevert === null) btnRevert = document.querySelector("#divSorteo > div:nth-child(2) > div:nth-child(1) > div > div > div > button:nth-child(14)")
+    //         btnRevert.removeAttribute('data-toggle');
+    //         btnRevert.setAttribute("onclick", "RevertirTiquete()");
+    //         btnRevert.setAttribute("id", "btnRevert");
+
+    //         var inputRevertTicket = fieldSetRever.cloneNode(true);
+    //         var childInputRevert = inputRevertTicket.children[0];
+    //         childInputRevert.setAttribute("id", "txtCodigoRevertir");
+    //         childInputRevert.setAttribute("placeholder", "Revertir Tiquete");
+    //         childInputRevert.parentElement.children[1].children[0].innerText = "↩️";
+    //         childInputRevert.addEventListener("keypress", function(event) {
+    //             if (event.key === "Enter") {
+    //                 event.preventDefault();
+    //                 document.getElementById("btnRevert").click();
+    //             }
+    //         });
+    //         btnRevert.parentNode.insertBefore(
+    //             inputRevertTicket, btnCopy
+    //         )
+
+    //         var fieldSetCopy = document.querySelector("#divSorteo > div:nth-child(2) > div:nth-child(1) > div > div > div > fieldset:nth-child(6)")
+    //         if(fieldSetCopy === null) fieldSetCopy = document.querySelector("#divSorteo > div:nth-child(2) > div:nth-child(1) > div > div > div > fieldset:nth-child(8)")
+    //         var textOnTop = document.createElement("p");
+
+    //         textOnTop.innerHTML = "Acciones";
+    //         fieldSetCopy.parentNode.insertBefore(
+    //             textOnTop, fieldSetCopy
+    //         )
+    //     }
+
     function appendButtons() {
         var inputNumero = document.getElementById("txtNumeroApuesta");
         var script = document.getElementById("txtMontoApuesta");
@@ -166,7 +230,7 @@
         };
         //divCard[0].appendChild(button);
         divCol[0].style = "margin-bottom: -36px;";
-         var pares = document.createElement("p");
+        var pares = document.createElement("p");
         pares.innerHTML = "Pares";
         pares.style = "margin-top: 10px;";
         divCard[0].appendChild(pares);
@@ -217,7 +281,7 @@
             };
             divCard[0].appendChild(btnTerminaciones);
         }
-       
+
         var decenas = document.createElement("p");
         decenas.innerHTML = "Decenas";
         decenas.setAttribute("id", "dec");
@@ -266,9 +330,12 @@
             var inputNumero = document.getElementById("txtNumeroApuesta");
             var termAlreadyExist = document.getElementById("term");
 
-            //save the numbers in a array and print in a div
+            var btnCopyPreTicket = document.querySelector('[data-target="#modalPretiquete"]');
+            if(btnCopyPreTicket != null) btnCopyPreTicket.remove();
+
             if (termAlreadyExist === null) {
                 appendButtons();
+                insertarCopiarRevertirAcciones()
             }
         }, 1000);
     };
@@ -279,6 +346,7 @@
                 var termAlreadyExist = doc.querySelector("#term");
                 if (found && !termAlreadyExist) {
                     appendButtons();
+                    insertarCopiarRevertirAcciones()
                     found = false;
                 }
                 if (termAlreadyExist) {
