@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tiempos Dashboard
 // @namespace    http://tampermonkey.net/
-// @version      0.5
+// @version      0.6
 // @description  Permite montos negativos, inserta terminaciones y pares.
 // @author       Dilbert Ramírez
 // @match        https://timesdashboard.com/Herradura/apuestasorteo*
@@ -107,7 +107,7 @@
                         monto = monto.replace(/\D/g, "");
                         var numeroAlto = tdChildNodes[j][k - 2].innerHTML;
                         numeroAlto = numeroAlto.replace(/\D/g, "");
-                       var numerosEspeciales = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,25,26,29,35,41,49,50,51,56,60,61,65,66,69,71,73,77,80,90,99];
+                       var numerosEspeciales = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,40,41,44,50,51,55,60,61,66,69,70,71,77,80,88,90,91,96,99];
                         if (numerosEspeciales.includes(parseInt(numeroAlto))) {
                             var montoRefuerzo = parseInt(montoDelRefuerzo) - 600;
                             if(monto >= montoRefuerzo){
